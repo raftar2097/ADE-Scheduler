@@ -4,6 +4,7 @@ import FullCalendar from '@fullcalendar/vue'
 import dayGridPlugin from '@fullcalendar/daygrid';
 import timeGridPlugin from '@fullcalendar/timegrid';
 import frLocale from '@fullcalendar/core/locales/fr';
+import html2PDF from 'jspdf-html2canvas';
 import './base.js';
 import '../css/calendar.css';
 const axios = require('axios');
@@ -14,6 +15,8 @@ const uclWeeksNo = {
     '2020': [-3, 0, 0, 0, -2, 1, 2, 3, 4, 5, 6, 7, 8, 9, -1, -1, 10, 11, 12, 13, -3, -3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, -3, -3],
     '2021': [0, 0, 0, -2, 1, 2, 3, 4, 5, 6, 7, 8, 9, -1, -1, 10, 11, 12, 13, -3, -3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, -3, -3, 0],
 };
+
+
 
 
 document.addEventListener('DOMContentLoaded', function() {
@@ -727,6 +730,22 @@ document.addEventListener('DOMContentLoaded', function() {
                     this.computing = false;
                 });
             },
+            printPage: function() {
+                let pageCal = document.getElementById('calendar');
+
+
+                html2PDF(pageCal, {
+                        image: {quality: 0.95},
+                        jsPDF: {
+                            format: 'a4',
+                            orientation: 'landscape'
+                        },
+                        imageType: 'image/png',
+                        output: './pdf/generate.pdf'
+                    });
+
+
+            }
         },
         computed: {
             calendarOpacity: function() {
